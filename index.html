@@ -1347,4 +1347,14 @@ function closePapyrus() {
   updateCountdown(); // Ejecutar al cargar
 </script>
 
+
+  <!-- Toggle para menú móvil -->
+  <script>
+    const btnMenu = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    btnMenu.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+
 </body></html>
