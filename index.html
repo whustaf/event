@@ -663,7 +663,7 @@
   transform: rotateY(180deg);
 }
 </style>
-<link href="https://cdn-icons-png.flaticon.com/512/616/616554.png" rel="icon" type="image/png"/>
+<link href="cresta.png" rel="icon" type="image/png"/>
 </head>
 <body class="overflow-x-hidden">
 <!-- Preloader -->
@@ -806,7 +806,7 @@
 <p class="parchment-font text-moonlight-silver">Se caracteriza por la valentía, el coraje, la disposición y la caballerosidad.</p>
 </div>
 <div class="flip-back parchment-card rounded-2xl p-6 flex items-center justify-center bg-black">
-<img alt="Escudo de Gryffindor" class="w-32 h-auto mx-auto" src="Gryffindor_Pottermore.webp"/>
+<img alt="Escudo de Gryffindor" class="w-32 h-auto mx-auto" src="Gryffindor_Pottermore.png"/>
 </div>
 </div>
 </div>
@@ -817,7 +817,7 @@
 <p class="parchment-font text-moonlight-silver">Valoran la lealtad, la justicia, la honestidad y el trabajo duro.</p>
 </div>
 <div class="flip-back parchment-card rounded-2xl p-6 flex items-center justify-center bg-black">
-<img alt="Escudo de Hufflepuff" class="w-32 h-auto mx-auto" src="Hufflepuff_Pottermore.webp"/>
+<img alt="Escudo de Hufflepuff" class="w-32 h-auto mx-auto" src="Hufflepuff_Pottermore.png"/>
 </div>
 </div>
 </div>
@@ -828,7 +828,7 @@
 <p class="parchment-font text-moonlight-silver">Destacan por su inteligencia, creatividad, sabiduría y capacidad de aprendizaje.</p>
 </div>
 <div class="flip-back parchment-card rounded-2xl p-6 flex items-center justify-center bg-black">
-<img alt="Escudo de Ravenclaw" class="w-32 h-auto mx-auto" src="Ravenclaw_Pottermore.webp"/>
+<img alt="Escudo de Ravenclaw" class="w-32 h-auto mx-auto" src="Ravenclaw_Pottermore.png"/>
 </div>
 </div>
 </div>
@@ -839,7 +839,7 @@
 <p class="parchment-font text-moonlight-silver">Se caracterizan por la ambición, la astucia y la determinación.</p>
 </div>
 <div class="flip-back parchment-card rounded-2xl p-6 flex items-center justify-center bg-black">
-<img alt="Escudo de Slytherin" class="w-32 h-auto mx-auto" src="Slytherin_Pottermore.webp"/>
+<img alt="Escudo de Slytherin" class="w-32 h-auto mx-auto" src="Slytherin_Pottermore.png"/>
 </div>
 </div>
 </div>
@@ -1472,8 +1472,8 @@ function closePapyrus() {
       if (pre) pre.style.display = 'none';
     });
   </script>
-<audio autoplay="" id="bg-music" loop="">
-<source src="https://cdn.pixabay.com/audio/2023/05/06/audio_d0dc5279ba.mp3" type="audio/mpeg"/>
+<audio id="bg-music" autoplay loop>
+<source src="harry-potter.mp3" type="audio/mpeg"/>
 </audio>
 <button class="fixed bottom-6 left-6 bg-time-turner-gold text-black p-3 rounded-full shadow-lg z-50" onclick="toggleMusic()">
   🎵
@@ -1486,5 +1486,17 @@ function toggleMusic() {
   const audio = document.getElementById('bg-music');
   audio.paused ? audio.play() : audio.pause();
 }
+
 </script>
+    <script>
+window.addEventListener('DOMContentLoaded', () => {
+  const audio = document.getElementById('bg-music');
+  if (audio) {
+    audio.play().catch(e => {
+      console.log("Autoplay bloqueado por el navegador, se activará tras interacción.");
+    });
+  }
+});
+</script>
+
 </body></html>
