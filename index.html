@@ -564,6 +564,14 @@
         .animate-fade-in-up {
             animation: fade-in-up 1.2s ease-out forwards;
         }
+    @keyframes scrollClose {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.7); }
+}
+
+.animate-scroll-close {
+    animation: scrollClose 1.5s ease forwards;
+}
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -719,6 +727,7 @@
 </div>
 </section>
 <!-- Concurso de Casas y Stands -->
+    <div class="parchment-card rounded-2xl p-8 patronus-effect">
 <section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-black star-texture">
 <div class="container mx-auto max-w-4xl">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
@@ -727,6 +736,7 @@
 <p class="text-moonlight-silver text-center mb-10 parchment-font max-w-3xl mx-auto">
                 Cada casa de Hogwarts contará con su propio stand temático donde podrás adquirir productos exclusivos, participar en mini juegos y coleccionar puntos. ¡Elige tu casa, apoya su stand y gana premios mágicos!
             </p>
+    
 <ul class="space-y-6 text-moonlight-silver parchment-font">
 <li><i class="fas fa-store text-time-turner-gold mr-2"></i> Compra productos o participa en juegos para ganar puntos para tu casa.</li>
 <li><i class="fas fa-star text-time-turner-gold mr-2"></i> Cada compra registrada en un stand suma puntos a la casa correspondiente.</li>
@@ -739,6 +749,7 @@
 </div>
 </div>
 </section>
+    </div>    
 <!-- Cosplay Section -->
 <section class="py-16 px-4 patronus-bg star-texture" id="cosplay">
 <div class="container mx-auto max-w-6xl">
@@ -1296,17 +1307,7 @@ function closePapyrus() {
         message.style.display = 'none';
     }, 1500);
 }
-</script>
-<style>
-@keyframes scrollClose {
-    0% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.7); }
-}
-
-.animate-scroll-close {
-    animation: scrollClose 1.5s ease forwards;
-}
-         // Fecha objetivo: 31 de octubre a las 12:00
+             // Fecha objetivo: 31 de octubre a las 12:00
   const eventDate = new Date("2025-10-31T18:00:00");
 
   function updateCountdown() {
@@ -1335,5 +1336,6 @@ function closePapyrus() {
   // Actualizar cada segundo
   setInterval(updateCountdown, 1000);
   updateCountdown(); // Ejecutar al cargar
-</style>
+</script>
+
 </body></html>
