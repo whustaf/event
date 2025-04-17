@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Festival Mágico de Hogwarts - Prisionero de Azkaban</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&amp;family=Cormorant:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        :root {
+            --azkaban-blue: #0a1a2a;
+            --dementor-cloak: #1e2b37;
+            --moonlight-silver: #e0e5eb;
+            --buckbeak-brown: #5d4a3a;
+            --time-turner-gold: #b89f5d;
+            --patronus-blue: #3a7ca5;
+            --werewolf-gray: #7d8a94;
+            --shrieking-purple: #4a3d6b;
+            --hogsmeade-red: #8c2e2e;
+            --snow-white: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Cormorant', serif;
+            background-color: var(--azkaban-blue);
+            color: var(--moonlight-silver);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2048');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .azkaban-gradient {
+            background: linear-gradient(135deg, var(--azkaban-blue), var(--dementor-cloak));
+        }
+
+        .patronus-gradient {
+            background: linear-gradient(135deg, var(--patronus-blue), #2c5d7a);
+        }
+
+        .time-turner-gradient {
+            background: linear-gradient(135deg, var(--time-turner-gold), #d4b772);
+        }
+
+        .hogwarts-text-gradient {
+            background: linear-gradient(270deg, var(--time-turner-gold), #f5f4eb, var(--patronus-blue), var(--time-turner-gold));
+            background-size: 600% 600%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: rgba(255, 255, 255, 0.85);
+            mix-blend-mode: screen;
+            animation: gradient-flow 8s ease infinite;
+        }
+
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .parchment-card {
+            background: rgba(224, 229, 235, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--time-turner-gold);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(184, 159, 93, 0.3), 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .parchment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(184, 159, 93, 0.1),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .parchment-card:hover::before {
+            left: 100%;
+        }
+
+        .magic-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            z-index: 1;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-family: 'Cinzel', serif;
+            background: var(--dementor-cloak);
+            color: var(--time-turner-gold);
+            border: 1px solid var(--time-turner-gold);
+        }
+
+        .magic-button:hover {
+            background: var(--azkaban-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(58, 124, 165, 0.6);
+        }
+
+        .floating {
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .magic-border {
+            position: relative;
+        }
+
+        .magic-border::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, var(--time-turner-gold), var(--moonlight-silver), var(--patronus-blue));
+            border-image-slice: 1;
+            pointer-events: none;
+        }
+
+        .magic-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .magic-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0;
+            filter: drop-shadow(0 0 3px currentColor);
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        }
+
+        .countdown-item {
+            background: rgba(10, 26, 42, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 80px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 1px solid var(--time-turner-gold);
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--time-turner-gold), var(--moonlight-silver));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Cinzel', serif;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--time-turner-gold);
+            transition: all 0.3s;
+            background-color: rgba(30, 43, 55, 0.1);
+        }
+
+        .file-upload:hover {
+            border-color: var(--moonlight-silver);
+            background: rgba(58, 124, 165, 0.1);
+        }
+
+        .file-upload.dragover {
+            border-color: var(--patronus-blue);
+            background: rgba(58, 124, 165, 0.1);
+        }
+
+        .house-option {
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .house-option:hover {
+            transform: translateY(-5px);
+        }
+
+        .house-option.selected {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(184, 159, 93, 0.5);
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Cinzel', serif;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--time-turner-gold), var(--moonlight-silver), var(--patronus-blue));
+            border-radius: 3px;
+        }
+
+        .nav-link {
+            position: relative;
+            font-family: 'Cinzel', serif;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--time-turner-gold);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hogwarts-crest {
+            background-image: url('cresta.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            filter: sepia(50%) brightness(80%) contrast(120%);
+        }
+
+        .flying-dementor {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: url('dementor.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 9.6;
+            animation: fly linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100vw, -100vh) rotate(360deg); }
+        }
+
+        .moonlight-effect {
+            position: relative;
+        }
+
+        .moonlight-effect::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, var(--moonlight-silver), transparent 70%);
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: flicker 3s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+            25% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+            75% { opacity: 0.7; transform: translateX(-50%) scale(0.98); }
+        }
+
+        .patronus-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .patronus-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(58, 124, 165, 0.2),
+                transparent
+            );
+            animation: spellShine 3s infinite;
+        }
+
+        @keyframes spellShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .hogwarts-font {
+            font-family: 'Cinzel', serif;
+        }
+
+        .parchment-font {
+            font-family: 'Cormorant', serif;
+        }
+
+        .time-turner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url('cresta.png');
+            background-size: contain;
+            animation: turnerSpin 15s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes turnerSpin {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(100vw, 100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Color classes */
+        .azkaban-bg {
+            background-color: var(--azkaban-blue);
+        }
+
+        .dementor-bg {
+            background-color: var(--dementor-cloak);
+        }
+
+        .moonlight-text {
+            color: var(--moonlight-silver);
+        }
+
+        .time-turner-text {
+            color: var(--time-turner-gold);
+        }
+
+        .patronus-bg {
+            background-color: var(--patronus-blue);
+        }
+
+        .werewolf-bg {
+            background-color: var(--werewolf-gray);
+        }
+
+        .shrieking-bg {
+            background-color: var(--shrieking-purple);
+        }
+
+        .hogsmeade-bg {
+            background-color: var(--hogsmeade-red);
+        }
+
+        .snow-bg {
+            background-color: var(--s snow-white);
+        }
+
+        .buckbeak-border {
+            border-color: var(--buckbeak-brown);
+        }
+
+        .magic-hover-effect:hover {
+            box-shadow: 0 0 15px var(--time-turner-gold);
+            transform: translateY(-3px);
+        }
+
+        .rune-texture {
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            background-blend-mode: overlay;
+        }
+
+        .star-texture {
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            background-blend-mode: overlay;
+        }
+
+        .magic-glow {
+            animation: glowPulse 2.5s ease-in-out infinite;
+        }
+
+        /* Correcciones finales para flip cards */
+        .exhibition-card {
+            perspective: 1000px;
+            position: relative;
+            min-height: 400px; /* Altura mínima para contenido */
+        }
+
+        .exhibition-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        .exhibition-card-front,
+        .exhibition-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden; /* Solo para caras opuestas */
+            -webkit-backface-visibility: hidden;
+            display: flex; /* Para mejor alineación de contenido */
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .exhibition-card-front {
+            transform: rotateY(0deg);
+            z-index: 1; /* Solo necesitamos 1 layer */
+        }
+
+        .exhibition-card-back {
+            transform: rotateY(180deg);
+            opacity: 0; /* Solución temporal para contenido faltante */
+            transition: opacity 0.3s 0.3s; /* Retraso para sincronizar con flip */
+        }
+
+        .exhibition-card:hover .exhibition-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .exhibition-card:hover .exhibition-card-back {
+            opacity: 1; /* Mostrar contenido después del giro */
+        }
+
+        .exhibition-card-inner {
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-transform: translate3d(0,0,0);
+        }
+
+        .exhibition-card-back {
+            transform: rotateY(180deg);
+        }
+
+        .cosplay-stage {
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            border: 3px solid var(--time-turner-gold);
+            box-shadow: 0 0 20px var(--time-turner-gold);
+        }
+
+        .cosplay-winner {
+            border: 3px solid var(--time-turner-gold);
+            box-shadow: 0 0 30px var(--time-turner-gold);
+            animation: pulse 2s infinite;
+        }
+
+        /* New Azkaban elements */
+        .dementor-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .moonlight-border {
+            border-color: var(--moonlight-silver);
+        }
+
+        .time-turner-bg {
+            background-color: var(--time-turner-gold);
+        }
+
+        .buckbeak-text {
+            color: var(--buckbeak-brown);
+        }
+
+        .patronus-text {
+            color: var(--patronus-blue);
+        }
+
+        @keyframes glowPulse {
+            0% { filter: drop-shadow(0 0 3px var(--time-turner-gold)); }
+            50% { filter: drop-shadow(0 0 8px var(--time-turner-gold)); }
+            100% { filter: drop-shadow(0 0 3px var(--time-turner-gold)); }
+        }
+
+        /* Scroll animation */
+        @keyframes scrollDrop {
+            0% { transform: translateY(-100px) scale(0.8) rotate(-5deg); opacity: 0; }
+            100% { transform: translateY(0) scale(1) rotate(0); opacity: 1; }
+        }
+
+        @keyframes scrollUnroll {
+            0% { transform: scaleY(0); opacity: 0; }
+            100% { transform: scaleY(1); opacity: 1; }
+        }
+
+        .animate-scroll-drop {
+            animation: scrollDrop 1.5s ease forwards;
+        }
+
+        .animate-scroll-unroll {
+            animation: scrollUnroll 1s ease forwards;
+            transform-origin: top center;
+        }
+
+        /* Fade in animation */
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 1.2s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+<!-- Magic Particles Background -->
+<div class="magic-particles" id="magic-particles"></div>
+<!-- Flying Dementors -->
+<div id="flying-dementors"></div>
+<!-- Time Turners -->
+<div id="time-turners"></div>
+<!-- Navigation -->
+<nav class="fixed w-full azkaban-bg bg-opacity-90 backdrop-filter backdrop-blur-lg z-50 py-4 border-b border-time-turner-gold">
+<div class="container mx-auto px-6 flex justify-between items-center">
+<div class="flex items-center">
+<i class="fas fa-moon text-3xl mr-3 hogwarts-text-gradient magic-glow"></i>
+<span class="text-xl font-bold hogwarts-text-gradient hogwarts-font">Festival Mágico de Azkaban</span>
+</div>
+<div class="hidden md:flex space-x-8">
+<a class="nav-link text-time-turner-gold hover:text-moonlight-silver" href="#evento">El Evento</a>
+<a class="nav-link text-time-turner-gold hover:text-moonlight-silver" href="#cosplay">Concurso Cosplay</a>
+<a class="nav-link text-time-turner-gold hover:text-moonlight-silver" href="#exhibiciones">Exhibiciones</a>
+<a class="nav-link text-time-turner-gold hover:text-moonlight-silver" href="#premios">Premios</a>
+<a class="nav-link text-time-turner-gold hover:text-moonlight-silver" href="#ubicacion">Ubicación</a>
+</div>
+<div class="md:hidden">
+<button class="text-time-turner-gold focus:outline-none" id="menu-toggle">
+<i class="fas fa-bars text-2xl"></i>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div class="hidden md:hidden azkaban-bg bg-opacity-95 w-full px-6 py-4 border-t border-time-turner-gold" id="mobile-menu">
+<div class="flex flex-col space-y-4">
+<a class="text-time-turner-gold hover:text-moonlight-silver hogwarts-font" href="#evento">El Evento</a>
+<a class="text-time-turner-gold hover:text-moonlight-silver hogwarts-font" href="#cosplay">Concurso Cosplay</a>
+<a class="text-time-turner-gold hover:text-moonlight-silver hogwarts-font" href="#exhibiciones">Exhibiciones</a>
+<a class="text-time-turner-gold hover:text-moonlight-silver hogwarts-font" href="#premios">Premios</a>
+<a class="text-time-turner-gold hover:text-moonlight-silver hogwarts-font" href="#ubicacion">Ubicación</a>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 md:pt-40 md:pb-32 px-4 rune-texture" id="evento">
+<div class="absolute inset-0 bg-gradient-to-b from-azkaban-blue to-black opacity-90"></div>
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&amp;w=2048')] bg-cover bg-center opacity-30"></div>
+<div class="container mx-auto relative z-10 text-center">
+<div class="hogwarts-crest floating mb-8 magic-glow"></div>
+<h1 class="text-4xl md:text-6xl font-bold mb-6 hogwarts-text-gradient hogwarts-font">
+                Festival Mágico de Azkaban
+            </h1>
+<h2 class="text-xl md:text-2xl text-time-turner-gold mb-8 max-w-3xl mx-auto parchment-font">
+                Una experiencia inspirada en el Prisionero de Azkaban con concurso de cosplay y exhibiciones
+            </h2>
+<div class="dementor-bg bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-full inline-flex items-center px-6 py-3 mb-8 border border-time-turner-gold magic-hover-effect">
+<i class="fas fa-calendar-alt text-time-turner-gold mr-3"></i>
+<span class="font-medium hogwarts-font">31 de Octubre - 18:00 a 23:00 hrs</span>
+</div>
+<div class="flex justify-center space-x-4 mb-12">
+<div class="countdown-item">
+<div class="countdown-number" id="days">00</div>
+<div class="text-time-turner-gold hogwarts-font">Días</div>
+</div>
+<div class="countdown-item">
+<div class="countdown-number" id="hours">00</div>
+<div class="text-time-turner-gold hogwarts-font">Horas</div>
+</div>
+<div class="countdown-item">
+<div class="countdown-number" id="minutes">00</div>
+<div class="text-time-turner-gold hogwarts-font">Minutos</div>
+</div>
+<div class="countdown-item">
+<div class="countdown-number" id="seconds">00</div>
+<div class="text-time-turner-gold hogwarts-font">Segundos</div>
+</div>
+</div>
+<a class="magic-button px-8 py-4 rounded-full text-lg font-bold text-white hogwarts-font magic-hover-effect" href="#cosplay">
+<i class="fas fa-user-astronaut mr-2"></i> ¡Inscríbete al Cosplay!
+            </a>
+</div>
+</section>
+<!-- About Event -->
+<section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-gray-900 star-texture">
+<div class="container mx-auto">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
+<span class="hogwarts-text-gradient">Sobre el Evento</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="parchment-card rounded-2xl p-8 patronus-effect">
+<h3 class="text-2xl font-bold mb-4 hogwarts-text-gradient hogwarts-font">¡Bienvenidos a Azkaban!</h3>
+<p class="text-moonlight-silver mb-6 parchment-font">
+                        El Festival Mágico inspirado en "El Prisionero de Azkaban" transportará a todos los asistentes al mundo mágico con estos elementos temáticos:
+                    </p>
+<ul class="space-y-3 text-moonlight-silver parchment-font">
+<li class="flex items-start">
+<i class="fas fa-cloud-moon text-time-turner-gold mr-3 mt-1"></i>
+<span>Concurso de Cosplay con categorías especiales de personajes</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-hippo text-time-turner-gold mr-3 mt-1"></i>
+<span>Exhibición de criaturas mágicas (Buckbeak, Dementores)</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-hourglass-half text-time-turner-gold mr-3 mt-1"></i>
+<span>Zona del Giratiempo con efectos especiales</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-dog text-time-turner-gold mr-3 mt-1"></i>
+<span>Patronus Corner: área de fotos con efectos de patronus</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-map-marked-alt text-time-turner-gold mr-3 mt-1"></i>
+<span>Mapa del Merodeador interactivo</span>
+</li>
+</ul>
+</div>
+<div class="relative">
+<div class="parchment-card rounded-2xl overflow-hidden magic-border dementor-shadow">
+<img alt="Evento de magia" class="w-full h-auto" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&amp;w=2048"/>
+</div>
+<div class="absolute -bottom-5 -right-5 patronus-bg rounded-full w-16 h-16 flex items-center justify-center shadow-lg border-2 border-time-turner-gold magic-hover-effect">
+<i class="fas fa-magic text-2xl text-moonlight-silver"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Hogwarts Houses Section -->
+<section class="py-16 px-4 bg-gradient-to-b from-black to-azkaban-blue rune-texture">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+<span class="hogwarts-text-gradient">Las Casas de Hogwarts</span>
+</h2>
+<p class="text-moonlight-silver text-center mb-10 parchment-font max-w-3xl mx-auto">
+                El Sombrero Seleccionador clasifica a los estudiantes en una de las cuatro casas de Hogwarts al inicio de su curso escolar. Cada casa representa valores y características únicas que definen a sus miembros.
+            </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="parchment-card rounded-2xl p-6">
+<h3 class="text-xl font-bold text-time-turner-gold hogwarts-font mb-2">Gryffindor</h3>
+<p class="parchment-font text-moonlight-silver">Se caracteriza por la valentía, el coraje, la disposición y la caballerosidad.</p>
+</div>
+<div class="parchment-card rounded-2xl p-6">
+<h3 class="text-xl font-bold text-time-turner-gold hogwarts-font mb-2">Hufflepuff</h3>
+<p class="parchment-font text-moonlight-silver">Valoran la lealtad, la justicia, la honestidad y el trabajo duro.</p>
+</div>
+<div class="parchment-card rounded-2xl p-6">
+<h3 class="text-xl font-bold text-time-turner-gold hogwarts-font mb-2">Ravenclaw</h3>
+<p class="parchment-font text-moonlight-silver">Destacan por su inteligencia, creatividad, sabiduría y capacidad de aprendizaje.</p>
+</div>
+<div class="parchment-card rounded-2xl p-6">
+<h3 class="text-xl font-bold text-time-turner-gold hogwarts-font mb-2">Slytherin</h3>
+<p class="parchment-font text-moonlight-silver">Se caracterizan por la ambición, la astucia y la determinación.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Concurso de Casas y Stands -->
+<section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-black star-texture">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+<span class="hogwarts-text-gradient">Concurso de Casas y Stands</span>
+</h2>
+<p class="text-moonlight-silver text-center mb-10 parchment-font max-w-3xl mx-auto">
+                Cada casa de Hogwarts contará con su propio stand temático donde podrás adquirir productos exclusivos, participar en mini juegos y coleccionar puntos. ¡Elige tu casa, apoya su stand y gana premios mágicos!
+            </p>
+<ul class="space-y-6 text-moonlight-silver parchment-font">
+<li><i class="fas fa-store text-time-turner-gold mr-2"></i> Compra productos o participa en juegos para ganar puntos para tu casa.</li>
+<li><i class="fas fa-star text-time-turner-gold mr-2"></i> Cada compra registrada en un stand suma puntos a la casa correspondiente.</li>
+<li><i class="fas fa-trophy text-time-turner-gold mr-2"></i> La casa con más puntos al final del evento ganará una Copa de la Casa simbólica y premios para sus miembros.</li>
+</ul>
+<div class="mt-10 text-center">
+<p class="text-time-turner-gold hogwarts-font text-lg">
+                    ¡Apoya a tu casa, colecciona magia y haz historia en el Festival de Azkaban!
+                </p>
+</div>
+</div>
+</section>
+<!-- Cosplay Section -->
+<section class="py-16 px-4 patronus-bg star-texture" id="cosplay">
+<div class="container mx-auto max-w-6xl">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
+<span class="hogwarts-text-gradient">Concurso de Cosplay</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+<div class="parchment-card rounded-2xl p-8 moonlight-effect">
+<div class="flex items-center mb-6">
+<div class="hogsmeade-bg rounded-full w-12 h-12 flex items-center justify-center mr-4 border-2 border-time-turner-gold">
+<i class="fas fa-user-astronaut text-xl text-moonlight-silver"></i>
+</div>
+<h3 class="text-2xl font-bold hogwarts-text-gradient hogwarts-font">Categorías Especiales</h3>
+</div>
+<div class="space-y-6">
+<div class="flex items-start">
+<div class="bg-gradient-to-br from-time-turner-gold to-hogsmeade-red rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1">
+<span class="text-black font-bold hogwarts-font">1</span>
+</div>
+<div>
+<h4 class="font-bold text-time-turner-gold hogwarts-font">Mejor Sirius Black</h4>
+<p class="text-moonlight-silver parchment-font">Premio al mejor cosplay del prisionero</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="bg-gradient-to-br from-time-turner-gold to-hogsmeade-red rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1">
+<span class="text-black font-bold hogwarts-font">2</span>
+</div>
+<div>
+<h4 class="font-bold text-time-turner-gold hogwarts-font">Mejor Dementor</h4>
+<p class="text-moonlight-silver parchment-font">Para el cosplay más aterrador</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="bg-gradient-to-br from-time-turner-gold to-hogsmeade-red rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1">
+<span class="text-black font-bold hogwarts-font">3</span>
+</div>
+<div>
+<h4 class="font-bold text-time-turner-gold hogwarts-font">Mejor Lupin</h4>
+<p class="text-moonlight-silver parchment-font">Premio al mejor profesor de Defensa</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="bg-gradient-to-br from-time-turner-gold to-hogsmeade-red rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1">
+<span class="text-black font-bold hogwarts-font">4</span>
+</div>
+<div>
+<h4 class="font-bold text-time-turner-gold hogwarts-font">Mejor Buckbeak</h4>
+<p class="text-moonlight-silver parchment-font">Para la mejor criatura mágica</p>
+</div>
+</div>
+</div>
+</div>
+<div class="parchment-card rounded-2xl p-8 moonlight-effect">
+<div class="flex items-center mb-6">
+<div class="shrieking-bg rounded-full w-12 h-12 flex items-center justify-center mr-4 border-2 border-moonlight-silver">
+<i class="fas fa-clipboard-list text-xl text-moonlight-silver"></i>
+</div>
+<h3 class="text-2xl font-bold hogwarts-text-gradient hogwarts-font">Requisitos</h3>
+</div>
+<ul class="space-y-4 text-moonlight-silver">
+<li class="flex items-start">
+<i class="fas fa-check-circle text-time-turner-gold mr-3 mt-1"></i>
+<span class="parchment-font">Los disfraces deben ser originales y creados por los participantes</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-time-turner-gold mr-3 mt-1"></i>
+<span class="parchment-font">Cada participante tendrá 3 minutos para su presentación</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-time-turner-gold mr-3 mt-1"></i>
+<span class="parchment-font">Se valorará creatividad y fidelidad al personaje</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-time-turner-gold mr-3 mt-1"></i>
+<span class="parchment-font">Prohibido el uso de materiales peligrosos</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-time-turner-gold mr-3 mt-1"></i>
+<span class="parchment-font">Inscripción previa obligatoria</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="text-center">
+<a class="magic-button px-8 py-4 rounded-full text-lg font-bold text-white hogwarts-font magic-hover-effect" href="#inscripcion">
+<i class="fas fa-scroll mr-2"></i> ¡Inscríbete al Concurso!
+                </a>
+</div>
+</div>
+</section>
+<!-- Exhibiciones Section -->
+<section class="py-16 px-4 shrieking-bg star-texture" id="exhibiciones">
+<div class="container mx-auto">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
+<span class="hogwarts-text-gradient">Exhibiciones Mágicas</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Tarjeta 1 - Giratiempo -->
+<div class="exhibition-card h-full">
+<div class="exhibition-card-inner h-full">
+<div class="exhibition-card-front parchment-card rounded-2xl p-8 h-full">
+<div class="w-full h-48 bg-gradient-to-b from-shrieking-purple to-azkaban-blue rounded-lg mb-6 flex items-center justify-center">
+<i class="fas fa-hourglass-half text-6xl text-time-turner-gold"></i>
+</div>
+<h3 class="text-2xl font-bold mb-4 hogwarts-text-gradient hogwarts-font">El Giratiempo</h3>
+<p class="text-moonlight-silver parchment-font">Exhibición interactiva del famoso artefacto con efectos especiales de manipulación temporal.</p>
+</div>
+<div class="exhibition-card-back parchment-card rounded-2xl p-8 h-full bg-gradient-to-b from-shrieking-purple to-azkaban-blue">
+<h3 class="text-2xl font-bold mb-4 text-time-turner-gold hogwarts-font">Horario</h3>
+<p class="text-moonlight-silver mb-4 parchment-font">19:00 - 21:00 hrs</p>
+<h3 class="text-2xl font-bold mb-4 text-time-turner-gold hogwarts-font">Ubicación</h3>
+<p class="text-moonlight-silver parchment-font">Torre de Astronomía</p>
+</div>
+</div>
+</div>
+<!-- Tarjeta 2 - Patronus -->
+<div class="exhibition-card h-full">
+<div class="exhibition-card-inner h-full">
+<div class="exhibition-card-front parchment-card rounded-2xl p-8 h-full">
+<div class="w-full h-48 bg-gradient-to-b from-patronus-blue to-dementor-cloak rounded-lg mb-6 flex items-center justify-center">
+<i class="fas fa-dog text-6xl text-moonlight-silver"></i>
+</div>
+<h3 class="text-2xl font-bold mb-4 hogwarts-text-gradient hogwarts-font">Patronus Corner</h3>
+<p class="text-moonlight-silver parchment-font">Área interactiva donde aprenderás a conjurar tu patronus con efectos visuales mágicos.</p>
+</div>
+<div class="exhibition-card-back parchment-card rounded-2xl p-8 h-full bg-gradient-to-b from-patronus-blue to-dementor-cloak">
+<h3 class="text-2xl font-bold mb-4 text-moonlight-silver hogwarts-font">Horario</h3>
+<p class="text-moonlight-silver mb-4 parchment-font">18:30 - 22:00 hrs</p>
+<h3 class="text-2xl font-bold mb-4 text-moonlight-silver hogwarts-font">Ubicación</h3>
+<p class="text-moonlight-silver parchment-font">Jardines del Lago Negro</p>
+</div>
+</div>
+</div>
+<!-- Tarjeta 3 - Criaturas -->
+<div class="exhibition-card h-full">
+<div class="exhibition-card-inner h-full">
+<div class="exhibition-card-front parchment-card rounded-2xl p-8 h-full">
+<div class="w-full h-48 bg-gradient-to-b from-buckbeak-brown to-werewolf-gray rounded-lg mb-6 flex items-center justify-center">
+<i class="fas fa-hippo text-6xl text-time-turner-gold"></i>
+</div>
+<h3 class="text-2xl font-bold mb-4 hogwarts-text-gradient hogwarts-font">Criaturas Mágicas</h3>
+<p class="text-moonlight-silver parchment-font">Exhibición de Buckbeak, el hipogrifo, y otras criaturas con animatrónicos y efectos especiales.</p>
+</div>
+<div class="exhibition-card-back parchment-card rounded-2xl p-8 h-full bg-gradient-to-b from-buckbeak-brown to-werewolf-gray">
+<h3 class="text-2xl font-bold mb-4 text-time-turner-gold hogwarts-font">Horario</h3>
+<p class="text-moonlight-silver mb-4 parchment-font">18:00 - 22:30 hrs</p>
+<h3 class="text-2xl font-bold mb-4 text-time-turner-gold hogwarts-font">Ubicación</h3>
+<p class="text-moonlight-silver parchment-font">Terrenos del Castillo</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-16 text-center">
+<div class="inline-block p-6 rounded-full border-4 border-time-turner-gold animate-pulse magic-hover-effect">
+<i class="fas fa-question text-3xl hogwarts-text-gradient"></i>
+</div>
+<p class="mt-6 text-lg max-w-2xl mx-auto text-time-turner-gold hogwarts-font">
+                    Todas las exhibiciones son gratuitas para los asistentes al festival
+                </p>
+</div>
+</div>
+</section>
+<!-- Prizes Section -->
+<section class="py-16 px-4 bg-gradient-to-b from-black to-azkaban-blue rune-texture" id="premios">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
+<span class="hogwarts-text-gradient">Premios del Concurso</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="parchment-card rounded-2xl p-8 text-center moonlight-effect cosplay-winner">
+<div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-b from-time-turner-gold to-black flex items-center justify-center shadow-lg border-2 border-time-turner-gold magic-hover-effect">
+<span class="text-4xl font-bold text-black hogwarts-font">1°</span>
+</div>
+<h3 class="text-2xl font-bold mb-2 hogwarts-text-gradient hogwarts-font">Primer Lugar</h3>
+<p class="text-xl text-time-turner-gold mb-4 hogwarts-font">$500.000</p>
+<ul class="text-moonlight-silver space-y-2 parchment-font">
+<li>Giratiempo réplica oficial</li>
+<li>Trofeo del Prisionero</li>
+<li>Sesión fotográfica profesional</li>
+</ul>
+</div>
+<div class="parchment-card rounded-2xl p-8 text-center moonlight-effect">
+<div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-b from-moonlight-silver to-black flex items-center justify-center shadow-lg border-2 border-time-turner-gold magic-hover-effect">
+<span class="text-4xl font-bold text-black hogwarts-font">2°</span>
+</div>
+<h3 class="text-2xl font-bold mb-2 hogwarts-text-gradient hogwarts-font">Segundo Lugar</h3>
+<p class="text-xl text-time-turner-gold mb-4 hogwarts-font">$300.000</p>
+<ul class="text-moonlight-silver space-y-2 parchment-font">
+<li>Varita mágica réplica de Sirius Black</li>
+<li>Medalla de plata</li>
+<li>Sesión fotográfica</li>
+</ul>
+</div>
+<div class="parchment-card rounded-2xl p-8 text-center moonlight-effect">
+<div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-b from-buckbeak-brown to-black flex items-center justify-center shadow-lg border-2 border-time-turner-gold magic-hover-effect">
+<span class="text-4xl font-bold text-black hogwarts-font">3°</span>
+</div>
+<h3 class="text-2xl font-bold mb-2 hogwarts-text-gradient hogwarts-font">Tercer Lugar</h3>
+<p class="text-xl text-time-turner-gold mb-4 hogwarts-font">$200.000</p>
+<ul class="text-moonlight-silver space-y-2 parchment-font">
+<li>Libro de hechizos de Lupin</li>
+<li>Medalla de bronce</li>
+<li>Sesión fotográfica</li>
+</ul>
+</div>
+</div>
+<div class="mt-16 parchment-card rounded-2xl p-8 text-center moonlight-effect">
+<h3 class="text-2xl font-bold mb-4 hogwarts-text-gradient hogwarts-font">Premios Especiales</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="parchment-card rounded-xl p-6 text-left">
+<div class="flex items-center mb-4">
+<div class="hogsmeade-bg rounded-full w-10 h-10 flex items-center justify-center mr-4 border-2 border-time-turner-gold">
+<i class="fas fa-cloud-moon text-time-turner-gold"></i>
+</div>
+<h4 class="text-xl font-bold text-time-turner-gold hogwarts-font">Mejor Dementor</h4>
+</div>
+<p class="text-moonlight-silver parchment-font">Premio al cosplay más aterrador: Kit de magia oscura + $100.000</p>
+</div>
+<div class="parchment-card rounded-xl p-6 text-left">
+<div class="flex items-center mb-4">
+<div class="patronus-bg rounded-full w-10 h-10 flex items-center justify-center mr-4 border-2 border-moonlight-silver">
+<i class="fas fa-hippo text-moonlight-silver"></i>
+</div>
+<h4 class="text-xl font-bold text-time-turner-gold hogwarts-font">Mejor Criatura</h4>
+</div>
+<p class="text-moonlight-silver parchment-font">Premio al mejor Buckbeak: Figura coleccionable + $150.000</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Registration Form -->
+<section class="py-16 px-4 dementor-bg star-texture" id="inscripcion">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
+<span class="hogwarts-text-gradient">Inscripción al Concurso</span>
+</h2>
+<div class="parchment-card rounded-2xl p-8">
+<div class="flex items-center mb-8">
+<div class="dementor-bg rounded-full w-12 h-12 flex items-center justify-center mr-4 border-2 border-time-turner-gold">
+<i class="fas fa-scroll text-xl text-time-turner-gold"></i>
+</div>
+<h3 class="text-2xl font-bold hogwarts-text-gradient hogwarts-font">Formulario de Inscripción</h3>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-time-turner-gold mb-2 hogwarts-font">Nombre completo</label>
+<input class="w-full px-4 py-3 rounded-lg azkaban-bg bg-opacity-50 border border-time-turner-gold focus:border-moonlight-silver focus:outline-none text-moonlight-silver parchment-font" placeholder="Ej: Sirius Black" required="" type="text"/>
+</div>
+<div>
+<label class="block text-time-turner-gold mb-2 hogwarts-font">Correo electrónico</label>
+<input class="w-full px-4 py-3 rounded-lg azkaban-bg bg-opacity-50 border border-time-turner-gold focus:border-moonlight-silver focus:outline-none text-moonlight-silver parchment-font" placeholder="Ej: padfoot@hogwarts.com" required="" type="email"/>
+</div>
+</div>
+<div>
+<label class="block text-time-turner-gold mb-2 hogwarts-font">Teléfono</label>
+<input class="w-full px-4 py-3 rounded-lg azkaban-bg bg-opacity-50 border border-time-turner-gold focus:border-moonlight-silver focus:outline-none text-moonlight-silver parchment-font" placeholder="Ej: +56 9 1234 5678" required="" type="tel"/>
+</div>
+<div>
+<label class="block text-time-turner-gold mb-2 hogwarts-font">Edad</label>
+<input class="w-full px-4 py-3 rounded-lg azkaban-bg bg-opacity-50 border border-time-turner-gold focus:border-moonlight-silver focus:outline-none text-moonlight-silver parchment-font" placeholder="Ej: 25" required="" type="number"/>
+</div>
+<div>
+<label class="block text-time-turner-gold mb-4 hogwarts-font">Categoría de participación</label>
+<select class="w-full px-4 py-3 rounded-lg azkaban-bg bg-opacity-50 border border-time-turner-gold focus:border-moonlight-silver focus:outline-none text-moonlight-silver parchment-font" required="">
+<option value="">Selecciona una categoría</option>
+<option value="sirius">Mejor Sirius Black</option>
+<option value="dementor">Mejor Dementor</option>
+<option value="lupin">Mejor Lupin</option>
+<option value="buckbeak">Mejor Buckbeak</option>
+<option value="otro">Otro personaje</option>
+</select>
+</div>
+<div>
+<label class="block text-time-turner-gold mb-4 hogwarts-font">Personaje que representarás</label>
+<input class="w-full px-4 py-3 rounded-lg azkaban-bg bg-opacity-50 border border-time-turner-gold focus:border-moonlight-silver focus:outline-none text-moonlight-silver parchment-font" placeholder="Ej: Sirius Black, Dementor, Buckbeak, etc." required="" type="text"/>
+</div>
+<div>
+<label class="block text-time-turner-gold mb-2 hogwarts-font">Descripción de tu disfraz</label>
+<textarea class="w-full px-4 py-3 rounded-lg azkaban-bg bg-opacity-50 border border-time-turner-gold focus:border-moonlight-silver focus:outline-none text-moonlight-silver parchment-font" placeholder="Describe tu disfraz, accesorios y cualquier efecto especial..." required="" rows="4"></textarea>
+</div>
+<div>
+<label class="block text-time-turner-gold mb-2 hogwarts-font">Foto de referencia (opcional)</label>
+<div class="file-upload rounded-lg p-8 text-center cursor-pointer transition">
+<i class="fas fa-cloud-upload-alt text-4xl mb-4 hogwarts-text-gradient"></i>
+<p class="text-time-turner-gold mb-2 hogwarts-font">Arrastra tu foto aquí o haz clic para seleccionar</p>
+<p class="text-sm text-moonlight-silver hogwarts-font">Formatos: JPG, PNG (Máx. 5MB)</p>
+<input accept="image/*" class="hidden" type="file"/>
+</div>
+</div>
+<div class="pt-4">
+<button class="magic-button w-full py-4 rounded-lg text-lg font-bold text-white hogwarts-font magic-hover-effect" type="submit">
+<i class="fas fa-paper-plane mr-2"></i> Enviar Inscripción
+                        </button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- Location Section -->
+<section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-black rune-texture" id="ubicacion">
+<div class="container mx-auto max-w-6xl">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
+<span class="hogwarts-text-gradient">Ubicación</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div>
+<h3 class="text-2xl font-bold mb-6 hogwarts-text-gradient hogwarts-font">Open Plaza Rancagua</h3>
+<p class="text-moonlight-silver mb-6 parchment-font">
+                        El Festival Mágico de Azkaban se realizará en Open Plaza Rancagua transformada por un día en los escenarios de la película.
+                    </p>
+<div class="space-y-4">
+<div class="flex items-start">
+<i class="fas fa-map-marker-alt text-xl text-time-turner-gold mr-4 mt-1"></i>
+<div>
+<p class="font-medium text-moonlight-silver hogwarts-font">Open Plaza Rancagua</p>
+<p class="text-moonlight-silver parchment-font">Rancagua, Región del Libertador General Bernardo O'Higgins</p>
+</div>
+</div>
+<div class="flex items-start">
+<i class="fas fa-clock text-xl text-time-turner-gold mr-4 mt-1"></i>
+<div>
+<p class="font-medium text-moonlight-silver hogwarts-font">Horario del evento:</p>
+<p class="text-moonlight-silver parchment-font">31 de Octubre - 18:00 a 23:00 hrs</p>
+</div>
+</div>
+<div class="flex items-start">
+<i class="fas fa-broom text-xl text-time-turner-gold mr-4 mt-1"></i>
+<div>
+<p class="font-medium text-moonlight-silver hogwarts-font">Cómo llegar:</p>
+<p class="text-moonlight-silver parchment-font">Estacionamiento gratuito • Acceso por transporte público</p>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<a class="magic-button inline-flex items-center px-6 py-3 rounded-lg hogwarts-font magic-hover-effect" href="https://maps.app.goo.gl/d1JQ8jk9DeDxRbtY6" target="_blank">
+<i class="fas fa-directions mr-3"></i> Ver en Google Maps
+                        </a>
+</div>
+</div>
+<div class="parchment-card rounded-2xl overflow-hidden h-96 dementor-shadow relative">
+<div class="absolute inset-0 magic-border z-10 pointer-events-none"></div>
+<iframe allowfullscreen="" height="450" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3301.1369131306737!2d-70.74305642352732!3d-34.16841703464123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x966343154bef09d7%3A0x94ebbc9f79de16b5!2sOpen%20Plaza%20Rancagua!5e0!3m2!1ses-419!2scl!4v1744849772837!5m2!1ses-419!2scl" style="border:0;" width="600"></iframe>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-20 px-4 relative overflow-hidden star-texture">
+<div class="absolute inset-0 bg-gradient-to-r from-azkaban-blue to-black opacity-90"></div>
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&amp;w=2048')] bg-cover bg-center opacity-30"></div>
+<div class="container mx-auto relative z-10 text-center">
+<h2 class="text-3xl md:text-4xl font-bold mb-6 hogwarts-text-gradient hogwarts-font">
+                ¿Listo para vivir la magia de Azkaban?
+            </h2>
+<p class="text-xl text-time-turner-gold mb-8 max-w-2xl mx-auto hogwarts-font">
+                No pierdas esta oportunidad única de ser parte del festival más mágico del año
+            </p>
+<div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+<a class="magic-button px-8 py-4 rounded-full text-lg font-bold text-white hogwarts-font magic-hover-effect" href="#inscripcion">
+<i class="fas fa-user-astronaut mr-2"></i> ¡Inscríbete al Cosplay!
+                </a>
+<a class="azkaban-bg bg-opacity-50 hover:bg-opacity-70 px-8 py-4 rounded-full text-lg font-bold text-time-turner-gold border border-time-turner-gold inline-block transition hogwarts-font magic-hover-effect" href="#evento">
+<i class="fas fa-info-circle mr-2"></i> Más Información
+                </a>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="azkaban-bg py-12 px-4 border-t border-time-turner-gold">
+<div class="container mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-center mb-8">
+<div class="flex items-center mb-6 md:mb-0">
+<i class="fas fa-moon text-3xl mr-3 hogwarts-text-gradient magic-glow"></i>
+<span class="text-xl font-bold hogwarts-text-gradient hogwarts-font">Festival Mágico de Azkaban</span>
+</div>
+<div class="flex space-x-6 mb-6 md:mb-0">
+<a class="text-time-turner-gold hover:text-moonlight-silver text-xl transition magic-hover-effect" href="#">
+<i class="fab fa-facebook"></i>
+</a>
+<a class="text-time-turner-gold hover:text-moonlight-silver text-xl transition magic-hover-effect" href="#">
+<i class="fab fa-twitter"></i>
+</a>
+<a class="text-time-turner-gold hover:text-moonlight-silver text-xl transition magic-hover-effect" href="#">
+<i class="fab fa-instagram"></i>
+</a>
+<a class="text-time-turner-gold hover:text-moonlight-silver text-xl transition magic-hover-effect" href="#">
+<i class="fab fa-youtube"></i>
+</a>
+</div>
+<div class="text-center md:text-right">
+<p class="text-time-turner-gold mb-2 hogwarts-font">Owl Post: info@festivalazkaban.cl</p>
+<p class="text-time-turner-gold hogwarts-font">Teléfono: +56 9 1234 5678</p>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8">
+<div class="flex flex-col md:flex-row justify-between items-center">
+<p class="text-moonlight-silver mb-4 md:mb-0 hogwarts-font">
+                        © 2025 Festival Mágico de Azkaban. Todos los derechos reservados.
+                    </p>
+<div class="flex space-x-6 hogwarts-font">
+<a class="text-moonlight-silver hover:text-time-turner-gold" href="#">Términos</a>
+<a class="text-moonlight-silver hover:text-time-turner-gold" href="#">Privacidad</a>
+<a class="text-moonlight-silver hover:text-time-turner-gold" href="#">FAQ</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- Papiro Mágico Desenrollado -->
+<div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50" id="magic-scroll">
+<div class="cursor-pointer w-64 h-32 bg-center bg-no-repeat bg-contain animate-scroll-drop shadow-xl border-4 border-time-turner-gold transition-all duration-700 ease-in-out" id="scroll-image" onclick="openPapyrus()" style="background-image: url('papiro.png');">
+<audio id="scroll-sound" src="https://cdn.pixabay.com/download/audio/2023/03/28/audio_c969335919.mp3?filename=magical-transition-2-148467.mp3"></audio>
+</div>
+</div>
+<div class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50" id="papyrus-message">
+<div class="bg-white p-8 rounded-lg max-w-md text-center shadow-2xl border-4 border-time-turner-gold animate-scroll-unroll relative">
+<div class="magic-particles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+<img alt="Hogwarts" class="mx-auto w-20 mb-4" src="cresta.png"/>
+<h2 class="text-2xl font-bold text-black hogwarts-font mb-2">¡Felicidades!</h2>
+<p class="text-gray-800 parchment-font">
+                Has sido aceptado en el <strong>Festival Mágico de Azkaban</strong>. Prepárate para vivir una noche mágica inolvidable.
+            </p>
+<button class="mt-6 magic-button px-6 py-2 rounded-full text-white" onclick="closePapyrus()">Aceptar</button>
+</div>
+</div>
+<script>
+    // Create magic particles
+    function createMagicParticles() {
+        const container = document.getElementById('magic-particles');
+        const colors = ['#b89f5d', '#e0e5eb', '#3a7ca5', '#4a3d6b'];
+        
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('magic-particle');
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.top = `${100 + Math.random() * 100}vh`;
+            particle.style.width = `${3 + Math.random() * 5}px`;
+            particle.style.height = particle.style.width;
+            particle.style.animationDuration = `${5 + Math.random() * 10}s`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            container.appendChild(particle);
+        }
+    }
+
+    // Create flying dementors
+    function createFlyingDementors() {
+        const container = document.getElementById('flying-dementors');
+        for (let i = 0; i < 8; i++) {
+            const dementor = document.createElement('div');
+            dementor.classList.add('flying-dementor');
+            dementor.style.left = `${Math.random() * 100}vw`;
+            dementor.style.top = `${Math.random() * 100}vh`;
+            dementor.style.animationDuration = `${20 + Math.random() * 30}s`;
+            dementor.style.animationDelay = `${Math.random() * 10}s`;
+            container.appendChild(dementor);
+        }
+    }
+
+
+    // House selection
+    function setupHouseSelection() {
+        const houseOptions = document.querySelectorAll('.house-option');
+        const selectedHouseInput = document.getElementById('selected-house');
+        
+        houseOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.house-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                option.classList.add('selected');
+                selectedHouseInput.value = option.getAttribute('data-house');
+                
+                const audio = new Audio('https://www.soundjay.com/buttons/sounds/button-09.mp3');
+                audio.play();
+            });
+        });
+    }
+
+    // File upload interaction
+    function setupFileUpload() {
+        const fileInput = document.querySelector('input[type="file"]');
+        const dropZone = fileInput.parentElement;
+        
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) {
+                dropZone.innerHTML = `
+                    <i class="fas fa-check-circle text-4xl mb-4 text-time-turner-gold"></i>
+                    <p class="text-time-turner-gold hogwarts-font">${fileInput.files[0].name}</p>
+                    <p class="text-sm text-moonlight-silver mt-2 hogwarts-font">Haz clic para cambiar</p>
+                `;
+            }
+        });
+
+        // Drag and drop support
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropZone.classList.add('dragover');
+        }
+
+        function unhighlight() {
+            dropZone.classList.remove('dragover');
+        }
+    }
+
+    // Ejecutar funciones al cargar la página
+    window.onload = () => {
+        createMagicParticles();
+        createFlyingDementors();
+        
+        setupHouseSelection();
+        setupFileUpload();
+    };
+</script>
+
+<script>
+function openPapyrus() {
+    const scroll = document.getElementById('magic-scroll');
+    const message = document.getElementById('papyrus-message');
+    const audio = document.getElementById('scroll-sound');
+    
+    scroll.style.display = 'none';
+    message.classList.remove('hidden');
+    if (audio) {
+        audio.play();
+    }
+}
+
+function closePapyrus() {
+    const message = document.getElementById('papyrus-message');
+    message.classList.add('animate-scroll-close');
+    setTimeout(() => {
+        message.style.display = 'none';
+    }, 1500);
+}
+</script>
+<style>
+@keyframes scrollClose {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.7); }
+}
+
+.animate-scroll-close {
+    animation: scrollClose 1.5s ease forwards;
+}
+</style>
+</body></html>
