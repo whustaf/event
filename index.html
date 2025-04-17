@@ -8,6 +8,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&amp;family=Cormorant:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
 <style>
         :root {
             --azkaban-blue: #0a1a2a;
@@ -581,9 +582,92 @@
     right: auto !important;
   }
 }
-    </style>
+    
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 9999;
+    }
+    #preloader .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f8f9fa;
+      border-top: 5px solid #b89f5d;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+  
+.magic-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: skewX(-20deg);
+  transition: 0.5s;
+  z-index: 0;
+}
+.magic-button:hover::after {
+  left: 125%;
+}
+.magic-button {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.magic-button > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* Flip card animation for casas */
+.flip-card {
+  background-color: transparent;
+  perspective: 1000px;
+  min-height: 200px;
+}
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-inner {
+  transform: rotateY(180deg);
+}
+.flip-front, .flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+</style>
+<link href="https://cdn-icons-png.flaticon.com/512/616/616554.png" rel="icon" type="image/png"/>
 </head>
 <body class="overflow-x-hidden">
+<!-- Preloader -->
+<div id="preloader"><div class="spinner"></div></div>
 <!-- Magic Particles Background -->
 <div class="magic-particles" id="magic-particles"></div>
 <!-- Flying Dementors -->
@@ -622,9 +706,8 @@
 </div>
 </nav>
 <!-- Hero Section -->
-<section class="relative pt-32 pb-20 md:pt-40 md:pb-32 px-4 rune-texture" id="evento">
+<section class="relative pt-32 pb-20 md:pt-40 md:pb-32 px-4 rune-texture" data-aos="fade-up" id="evento">
 <div class="absolute inset-0 bg-gradient-to-b from-azkaban-blue to-black opacity-90"></div>
-<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&amp;w=2048')] bg-cover bg-center opacity-30"></div>
 <div class="container mx-auto relative z-10 text-center">
 <div class="hogwarts-crest floating mb-8 magic-glow"></div>
 <h1 class="text-4xl md:text-6xl font-bold mb-6 hogwarts-text-gradient hogwarts-font">
@@ -661,7 +744,7 @@
 </div>
 </section>
 <!-- About Event -->
-<section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-gray-900 star-texture">
+<section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-gray-900 star-texture" data-aos="fade-up">
 <div class="container mx-auto">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
 <span class="hogwarts-text-gradient">Sobre el Evento</span>
@@ -707,7 +790,7 @@
 </div>
 </section>
 <!-- Hogwarts Houses Section -->
-<section class="py-16 px-4 bg-gradient-to-b from-black to-azkaban-blue rune-texture">
+<section class="py-16 px-4 bg-gradient-to-b from-black to-azkaban-blue rune-texture" data-aos="fade-up">
 <div class="container mx-auto max-w-4xl">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
 <span class="hogwarts-text-gradient">Las Casas de Hogwarts</span>
@@ -716,28 +799,56 @@
                 El Sombrero Seleccionador clasifica a los estudiantes en una de las cuatro casas de Hogwarts al inicio de su curso escolar. Cada casa representa valores y características únicas que definen a sus miembros.
             </p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-<div class="parchment-card rounded-2xl p-6">
+<div class="flip-card rounded-2xl">
+<div class="flip-inner">
+<div class="flip-front parchment-card rounded-2xl p-6">
 <h3 class="text-xl font-bold text-time-turner-gold hogwarts-font mb-2">Gryffindor</h3>
 <p class="parchment-font text-moonlight-silver">Se caracteriza por la valentía, el coraje, la disposición y la caballerosidad.</p>
 </div>
-<div class="parchment-card rounded-2xl p-6">
+<div class="flip-back parchment-card rounded-2xl p-6 flex items-center justify-center bg-black">
+<img alt="Escudo de Gryffindor" class="w-32 h-auto mx-auto" src="Gryffindor_Pottermore.webp"/>
+</div>
+</div>
+</div>
+<div class="flip-card rounded-2xl">
+<div class="flip-inner">
+<div class="flip-front parchment-card rounded-2xl p-6">
 <h3 class="text-xl font-bold text-time-turner-gold hogwarts-font mb-2">Hufflepuff</h3>
 <p class="parchment-font text-moonlight-silver">Valoran la lealtad, la justicia, la honestidad y el trabajo duro.</p>
 </div>
-<div class="parchment-card rounded-2xl p-6">
+<div class="flip-back parchment-card rounded-2xl p-6 flex items-center justify-center bg-black">
+<img alt="Escudo de Hufflepuff" class="w-32 h-auto mx-auto" src="Hufflepuff_Pottermore.webp"/>
+</div>
+</div>
+</div>
+<div class="flip-card rounded-2xl">
+<div class="flip-inner">
+<div class="flip-front parchment-card rounded-2xl p-6">
 <h3 class="text-xl font-bold text-time-turner-gold hogwarts-font mb-2">Ravenclaw</h3>
 <p class="parchment-font text-moonlight-silver">Destacan por su inteligencia, creatividad, sabiduría y capacidad de aprendizaje.</p>
 </div>
-<div class="parchment-card rounded-2xl p-6">
+<div class="flip-back parchment-card rounded-2xl p-6 flex items-center justify-center bg-black">
+<img alt="Escudo de Ravenclaw" class="w-32 h-auto mx-auto" src="Ravenclaw_Pottermore.webp"/>
+</div>
+</div>
+</div>
+<div class="flip-card rounded-2xl">
+<div class="flip-inner">
+<div class="flip-front parchment-card rounded-2xl p-6">
 <h3 class="text-xl font-bold text-time-turner-gold hogwarts-font mb-2">Slytherin</h3>
 <p class="parchment-font text-moonlight-silver">Se caracterizan por la ambición, la astucia y la determinación.</p>
+</div>
+<div class="flip-back parchment-card rounded-2xl p-6 flex items-center justify-center bg-black">
+<img alt="Escudo de Slytherin" class="w-32 h-auto mx-auto" src="Slytherin_Pottermore.webp"/>
+</div>
+</div>
 </div>
 </div>
 </div>
 </section>
 <!-- Concurso de Casas y Stands -->
-    <div class="parchment-card rounded-2xl p-8 patronus-effect">
-<section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-black star-texture">
+<div class="parchment-card rounded-2xl p-8 patronus-effect">
+<section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-black star-texture" data-aos="fade-up">
 <div class="container mx-auto max-w-4xl">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
 <span class="hogwarts-text-gradient">Concurso de Casas y Stands</span>
@@ -745,7 +856,6 @@
 <p class="text-moonlight-silver text-center mb-10 parchment-font max-w-3xl mx-auto">
                 Cada casa de Hogwarts contará con su propio stand temático donde podrás adquirir productos exclusivos, participar en mini juegos y coleccionar puntos. ¡Elige tu casa, apoya su stand y gana premios mágicos!
             </p>
-    
 <ul class="space-y-6 text-moonlight-silver parchment-font">
 <li><i class="fas fa-store text-time-turner-gold mr-2"></i> Compra productos o participa en juegos para ganar puntos para tu casa.</li>
 <li><i class="fas fa-star text-time-turner-gold mr-2"></i> Cada compra registrada en un stand suma puntos a la casa correspondiente.</li>
@@ -758,9 +868,9 @@
 </div>
 </div>
 </section>
-    </div>    
+</div>
 <!-- Cosplay Section -->
-<section class="py-16 px-4 patronus-bg star-texture" id="cosplay">
+<section class="py-16 px-4 patronus-bg star-texture" data-aos="fade-up" id="cosplay">
 <div class="container mx-auto max-w-6xl">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
 <span class="hogwarts-text-gradient">Concurso de Cosplay</span>
@@ -851,7 +961,7 @@
 </div>
 </section>
 <!-- Exhibiciones Section -->
-<section class="py-16 px-4 shrieking-bg star-texture" id="exhibiciones">
+<section class="py-16 px-4 shrieking-bg star-texture" data-aos="fade-up" id="exhibiciones">
 <div class="container mx-auto">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
 <span class="hogwarts-text-gradient">Exhibiciones Mágicas</span>
@@ -923,7 +1033,7 @@
 </div>
 </section>
 <!-- Prizes Section -->
-<section class="py-16 px-4 bg-gradient-to-b from-black to-azkaban-blue rune-texture" id="premios">
+<section class="py-16 px-4 bg-gradient-to-b from-black to-azkaban-blue rune-texture" data-aos="fade-up" id="premios">
 <div class="container mx-auto max-w-4xl">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
 <span class="hogwarts-text-gradient">Premios del Concurso</span>
@@ -992,7 +1102,7 @@
 </div>
 </section>
 <!-- Registration Form -->
-<section class="py-16 px-4 dementor-bg star-texture" id="inscripcion">
+<section class="py-16 px-4 dementor-bg star-texture" data-aos="fade-up" id="inscripcion">
 <div class="container mx-auto max-w-4xl">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
 <span class="hogwarts-text-gradient">Inscripción al Concurso</span>
@@ -1061,7 +1171,7 @@
 </div>
 </section>
 <!-- Location Section -->
-<section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-black rune-texture" id="ubicacion">
+<section class="py-16 px-4 bg-gradient-to-b from-azkaban-blue to-black rune-texture" data-aos="fade-up" id="ubicacion">
 <div class="container mx-auto max-w-6xl">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">
 <span class="hogwarts-text-gradient">Ubicación</span>
@@ -1109,7 +1219,7 @@
 </div>
 </section>
 <!-- CTA Section -->
-<section class="py-20 px-4 relative overflow-hidden star-texture">
+<section class="py-20 px-4 relative overflow-hidden star-texture" data-aos="fade-up">
 <div class="absolute inset-0 bg-gradient-to-r from-azkaban-blue to-black opacity-90"></div>
 <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&amp;w=2048')] bg-cover bg-center opacity-30"></div>
 <div class="container mx-auto relative z-10 text-center">
@@ -1210,7 +1320,7 @@
     // Create flying dementors
     function createFlyingDementors() {
         const container = document.getElementById('flying-dementors');
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 4; i++) {
             const dementor = document.createElement('div');
             dementor.classList.add('flying-dementor');
             dementor.style.left = `${Math.random() * 100}vw`;
@@ -1295,7 +1405,6 @@
         setupFileUpload();
     };
 </script>
-
 <script>
 function openPapyrus() {
     const scroll = document.getElementById('magic-scroll');
@@ -1346,15 +1455,36 @@ function closePapyrus() {
   setInterval(updateCountdown, 1000);
   updateCountdown(); // Ejecutar al cargar
 </script>
-
-
-  <!-- Toggle para menú móvil -->
-  <script>
+<!-- Toggle para menú móvil -->
+<script>
     const btnMenu = document.getElementById('menu-toggle');
     const menu = document.getElementById('mobile-menu');
     btnMenu.addEventListener('click', () => {
       menu.classList.toggle('hidden');
     });
   </script>
-
+<!-- AOS and Preloader Hide -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 800, once: true });
+    window.addEventListener('load', () => {
+      const pre = document.getElementById('preloader');
+      if (pre) pre.style.display = 'none';
+    });
+  </script>
+<audio autoplay="" id="bg-music" loop="">
+<source src="https://cdn.pixabay.com/audio/2023/05/06/audio_d0dc5279ba.mp3" type="audio/mpeg"/>
+</audio>
+<button class="fixed bottom-6 left-6 bg-time-turner-gold text-black p-3 rounded-full shadow-lg z-50" onclick="toggleMusic()">
+  🎵
+</button>
+<button class="fixed bottom-6 right-6 bg-time-turner-gold text-black p-3 rounded-full shadow-lg z-50 hover:scale-110 transition" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+  ↑
+</button>
+<script>
+function toggleMusic() {
+  const audio = document.getElementById('bg-music');
+  audio.paused ? audio.play() : audio.pause();
+}
+</script>
 </body></html>
