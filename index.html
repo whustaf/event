@@ -1306,5 +1306,34 @@ function closePapyrus() {
 .animate-scroll-close {
     animation: scrollClose 1.5s ease forwards;
 }
+         // Fecha objetivo: 31 de octubre a las 18:00
+  const eventDate = new Date("2025-10-31T18:00:00");
+
+  function updateCountdown() {
+    const now = new Date();
+    const timeLeft = eventDate - now;
+
+    if (timeLeft <= 0) {
+      document.getElementById("days").textContent = "00";
+      document.getElementById("hours").textContent = "00";
+      document.getElementById("minutes").textContent = "00";
+      document.getElementById("seconds").textContent = "00";
+      return;
+    }
+
+    const days = String(Math.floor(timeLeft / (1000 * 60 * 60 * 24))).padStart(2, '0');
+    const hours = String(Math.floor((timeLeft / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+    const minutes = String(Math.floor((timeLeft / (1000 * 60)) % 60)).padStart(2, '0');
+    const seconds = String(Math.floor((timeLeft / 1000) % 60)).padStart(2, '0');
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+  }
+
+  // Actualizar cada segundo
+  setInterval(updateCountdown, 1000);
+  updateCountdown(); // Ejecutar al cargar
 </style>
 </body></html>
